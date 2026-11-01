@@ -91,12 +91,52 @@ const ARM = {
   cam: { pos: [2.6, 1.6, 2.75], target: [0.35, 0.36, 0] },
   build(group) {
     const live = makeArm(solid); group.add(live.root);
-    const fixC = new THREE.Vector3(0.98, 0.2, 0.18), fixH = new THREE.Vector3(0.14, 0.2, 0.16);
+    // Place the fixture where the tool passes close (a near miss) and no other link touches it
+    const fixH = new THREE.Vector3(0.12, 0.15, 0.13);
+    const fixC = (() => {
+      const pr = makeArm(solid), N = 120, tips = [], links = [];
+      const marks = [pr.tip];
+      pr.root.traverse(o => { if (o.isMesh) marks.push(o); });
+      const v = new THREE.Vector3();
+      for (let i = 0; i < N; i++) {
+        pr.set(i / N); pr.root.updateMatrixWorld(true);
+        tips.push(pr.tip.getWorldPosition(new THREE.Vector3()));
+        pr.root.traverse(o => { if (o.isMesh && o.geometry) {
+          o.geometry.computeBoundingBox(); const bb = o.geometry.boundingBox, sz = bb.getSize(new THREE.Vector3());
+          const steps = d => (d === Math.max(sz.x, sz.y, sz.z) ? [0, 0.25, 0.5, 0.75, 1] : [0, 0.5, 1]);
+          for (const fx of steps(sz.x)) for (const fy of steps(sz.y)) for (const fz of steps(sz.z))
+            links.push(v.set(bb.min.x + sz.x * fx, bb.min.y + sz.y * fy, bb.min.z + sz.z * fz).applyMatrix4(o.matrixWorld).clone());
+        } });
+      }
+      const distBox = (p, c) => p.distanceTo(boxNearest(p, c, fixH));
+      let best = null;
+      for (let x = 0.55; x <= 1.25; x += 0.025) for (let z = -0.55; z <= 0.55; z += 0.025) {
+        const c = new THREE.Vector3(x, fixH.y, z);
+        let tipMin = Infinity, linkMin = Infinity;
+        for (const p of tips) tipMin = Math.min(tipMin, distBox(p, c));
+        if (tipMin < 0.025 || tipMin > 0.06) continue;
+        for (const p of links) { linkMin = Math.min(linkMin, distBox(p, c)); if (linkMin < 0.012) break; }
+        if (linkMin < 0.012) continue;
+        const score = Math.abs(tipMin - 0.035);
+        if (!best || score < best.score) best = { c, score };
+      }
+      window.__fixture = best ? 'fit' : 'fallback';
+      return best ? best.c : new THREE.Vector3(1.1, fixH.y, 0.35);
+    })();
     const fixture = box(fixH.x * 2, fixH.y * 2, fixH.z * 2, std(C.fixture)); fixture.position.copy(fixC); group.add(fixture);
     for (let i = 0; i < 6; i++) { const t = i / 5, gh = makeArm(ghostSet(t)); gh.set(0.08 + 0.42 * t); group.add(gh.root); }
     const probe = makeArm(solid); const pts = [], v = new THREE.Vector3();
     for (let i = 0; i <= 120; i++) { probe.set(i / 120); probe.root.updateMatrixWorld(true); probe.tip.getWorldPosition(v); pts.push(v.clone()); }
     group.add(dashed(pts));
+    if (new URLSearchParams(location.search).has('debug')) window.__armCheck = () => {
+      // every vertex of every live mesh, over the whole cycle: inside the fixture?
+      let minD = Infinity, inside = 0; const v = new THREE.Vector3();
+      for (let i = 0; i < 240; i++) { live.set(i / 240); live.root.updateMatrixWorld(true);
+        live.root.traverse(o => { if (!o.isMesh) return; const pos = o.geometry.attributes.position;
+          for (let k = 0; k < pos.count; k++) { v.fromBufferAttribute(pos, k).applyMatrix4(o.matrixWorld);
+            const d = v.distanceTo(boxNearest(v, fixC, fixH)); if (d === 0) inside++; minD = Math.min(minD, d); } }); }
+      return { minDistanceMm: +(minD * 1000).toFixed(1), verticesInside: inside };
+    };
     return { update(p) { live.set(p); live.root.updateMatrixWorld(true); const a = live.tip.getWorldPosition(new THREE.Vector3()); return [a, boxNearest(a, fixC, fixH)]; } };
   },
 };
