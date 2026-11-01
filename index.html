@@ -45,7 +45,28 @@ h1{font-size:46px;line-height:1.1;letter-spacing:-.02em;margin:10px 0 18px}
 .note{font-size:14px;color:var(--muted);margin-top:14px}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px}
 .hero-art{padding:18px}
+.tlwide{margin-bottom:16px;padding:16px 18px}
+.tlwide svg{width:100%;height:auto;display:block;overflow:visible}
+.tlhead{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+.tlmeta{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:12.5px;color:var(--muted)}
+.tlwide .tlhead-line{animation:tlplay 4.5s linear infinite}
+@keyframes tlplay{0%{transform:translateX(0)}100%{transform:translateX(101.5px)}}
+.tlwide .loopring{animation:flash 2.4s ease-in-out infinite}
+@media (prefers-reduced-motion: reduce){.tlwide .tlhead-line,.tlwide .loopring{animation:none}}
+@media (max-width:860px){.tlwide{overflow-x:auto}.tlwide svg{min-width:760px}}
+.tool svg{width:100%;height:auto;display:block;margin:6px 0 12px;background:#F7F6F1;border-radius:10px}
+.tool .needle{animation:needle 3.2s ease-in-out infinite}
+@keyframes needle{0%,100%{transform:rotate(-40deg)}50%{transform:rotate(38deg)}}
+.tool .scan{animation:scan 6s linear infinite}
+@keyframes scan{0%{transform:translateX(-100px)}100%{transform:translateX(160px)}}
+.tool .now{animation:flash 2.4s ease-in-out infinite}
+@keyframes flash{0%,100%{opacity:1}50%{opacity:.55}}
+.tool .bar{transform-box:fill-box;transform-origin:bottom;animation:bar 2.4s ease-in-out infinite alternate}
+.tool .b2{animation-delay:.4s}.tool .b3{animation-delay:.8s}.tool .b4{animation-delay:1.2s}
+@keyframes bar{0%{transform:scaleY(.75)}100%{transform:scaleY(1)}}
+@media (prefers-reduced-motion: reduce){.tool .needle,.tool .scan,.tool .now,.tool .bar{animation:none}}
 .scheme{padding:18px}
+.wiring{margin-top:16px}
 .scheme svg{width:100%;height:auto;display:block}
 @media (prefers-reduced-motion: reduce){.flowdots{display:none}}
 .swipe{display:none}
@@ -55,7 +76,8 @@ h1{font-size:46px;line-height:1.1;letter-spacing:-.02em;margin:10px 0 18px}
 #hero3d canvas:not(.lane){position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab}
 #hero3d canvas.lane{position:absolute;left:12px;right:12px;bottom:12px;width:calc(100% - 24px);height:126px;background:rgba(252,251,248,.92);border:1px solid var(--line);border-radius:8px;backdrop-filter:blur(4px)}
 #hero3d canvas:not(.lane):active{cursor:grabbing}
-#hero3d .fallback{position:absolute;inset:0;padding:24px;display:block}
+#hero3d .fallback{position:absolute;inset:0;display:block}
+#hero3d .fallback img{width:100%;height:100%;object-fit:cover;display:block}
 #hero3d.ready .fallback{display:none}
 #hero3d:not(.ready) .plaque,#hero3d:not(.ready) .lane,#hero3d:not(.ready) .tabs,#hero3d:not(.ready) .caption{display:none}
 #hero3d .plaque{position:absolute;left:0;top:0;pointer-events:none;background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--ok);border-radius:8px;padding:6px 10px;font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:12px;color:var(--muted);box-shadow:0 2px 10px rgba(42,41,37,.08);white-space:nowrap;opacity:0;transition:opacity .4s}
@@ -118,6 +140,7 @@ footer a{color:var(--muted)}
     </a>
     <nav>
       <a href="#how">How it works</a>
+      <a href="#analysis">Analysis</a>
       <a href="#what">What it does</a>
       <a href="#open">Open core</a>
       <a href="#roadmap">Roadmap</a>
@@ -136,36 +159,17 @@ footer a{color:var(--muted)}
       </div>
       <p class="note">Every core idea is built and proven in working prototypes. Now we are shaping them into one coherent product — early users shape what ships first.</p>
     </div>
+    <div class="hero-visual">
     <div id="hero3d" role="img" aria-label="Machines on test stands — a 6-axis arm, a SCARA and a hexapod — with stroboscope imprints, a clearance dimension with limits and a run timeline">
       <canvas></canvas>
       <div class="caption">Test cell · 6-axis arm · pick and place</div>
       <div class="tabs" role="group" aria-label="Machine"><button data-scene="arm" aria-pressed="true">6-axis arm</button><button data-scene="scara" aria-pressed="false">SCARA</button><button data-scene="hexapod" aria-pressed="false">Hexapod</button></div>
       <div class="plaque"><span class="k">tool ↔ fixture</span><span class="v">—</span><span class="verdict">✓ in limits</span></div>
       <canvas class="lane" aria-hidden="true"></canvas>
-      <div class="fallback"><svg viewBox="0 0 420 300">
-        <defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="var(--accent)" stop-opacity=".25"/><stop offset="1" stop-color="var(--accent)" stop-opacity=".9"/></linearGradient></defs>
-        <line x1="20" y1="250" x2="400" y2="250" stroke="var(--line)" stroke-width="2"/>
-        <g stroke="url(#g)" stroke-width="7" stroke-linecap="round" fill="none">
-          <path d="M80 250 L110 175 L150 140" opacity=".25"/>
-          <path d="M80 250 L118 172 L165 150" opacity=".45"/>
-          <path d="M80 250 L126 170 L178 165" opacity=".7"/>
-          <path d="M80 250 L133 170 L188 183"/>
-        </g>
-        <circle cx="80" cy="250" r="8" fill="var(--accent)"/>
-        <circle cx="133" cy="170" r="7" fill="var(--accent)"/>
-        <path d="M150 140 C 160 120, 175 125, 188 183" stroke="var(--muted)" stroke-dasharray="4 5" stroke-width="2" fill="none"/>
-        <g font-family="ui-monospace, monospace" font-size="13">
-          <rect x="230" y="150" width="160" height="62" rx="10" fill="var(--surface)" stroke="var(--line)"/>
-          <text x="244" y="174" fill="var(--muted)">clearance · step 3412</text>
-          <text x="244" y="198" fill="var(--ink)" font-size="17" font-weight="700">4.2 mm</text>
-          <text x="318" y="198" fill="var(--ok)" font-weight="700">✓ in limits</text>
-        </g>
-        <rect x="20" y="268" width="380" height="14" rx="7" fill="var(--accent-soft)"/>
-        <rect x="20" y="268" width="230" height="14" rx="7" fill="var(--accent)" opacity=".55"/>
-        <rect x="246" y="262" width="4" height="26" rx="2" fill="var(--ink)"/>
-      </svg></div>
+      <div class="fallback"><img src="img/hero-fallback.webp" alt="6-axis arm on a test cell with stroboscope imprints, a tool-to-fixture clearance below its limit, and a run timeline with a dimension graph" width="553" height="561"></div>
     </div>
       <p class="note" style="text-align:right;margin-top:8px">Concept illustration of Twinhaven measurements, stroboscope and run timeline.</p>
+    </div>
   </div>
 </div>
 
@@ -232,7 +236,7 @@ footer a{color:var(--muted)}
           <g>
             <rect x="768" y="40" width="192" height="64" rx="10" fill="#FCFBF8" stroke="#D3D1C7"/>
             <text x="784" y="66" font-size="15" font-weight="600" fill="#2A2925">Measure &amp; decide</text>
-            <text x="784" y="88" font-size="12.5" fill="#0F6E56">✓ limits, verdicts, graphs</text>
+            <text x="784" y="88" font-size="12.5" fill="#0F6E56">✓ stroboscopes, graphs, limits</text>
             <rect x="768" y="150" width="192" height="64" rx="10" fill="#F7F6F1" stroke="#B4B2A9" stroke-dasharray="5 4"/>
             <text x="784" y="176" font-size="15" font-weight="600" fill="#2A2925">Data &amp; training</text>
             <text x="784" y="198" font-size="12.5" fill="#6E6C64">labelled datasets, AI</text>
@@ -254,6 +258,190 @@ footer a{color:var(--muted)}
       </svg>
     </div>
     <p class="note swipe">Swipe the scheme sideways →</p>
+    <div class="card scheme wiring">
+      <div class="tlhead"><h3 style="margin:0">Wiring, inside the same twin</h3><span class="tag soon">concept · on the roadmap</span></div>
+      <p class="note" style="margin:2px 0 10px">A hexapod as an example: six legs, a head and an arm talk to the controller over buses through the body. Each wire becomes a signal in the simulation.</p>
+      <svg viewBox="0 0 1000 430" role="img" aria-label="Concept schematic of a hexapod: the head with a camera connects to the controller over USB; the controller connects to the body hub over the servo bus and I2C; the body hub feeds six legs with three servos each and an arm over servo buses; signals flow both ways">
+        <defs>
+          <path id="wl1" d="M380 226 C 320 226, 320 143, 260 143"/>
+          <path id="wl2" d="M380 256 C 320 256, 320 253, 260 253"/>
+          <path id="wl3" d="M380 286 C 320 286, 320 363, 260 363"/>
+          <path id="wr1" d="M620 226 C 680 226, 680 143, 740 143"/>
+          <path id="wr2" d="M620 256 C 680 256, 680 253, 740 253"/>
+          <path id="wr3" d="M620 286 C 680 286, 680 363, 740 363"/>
+          <path id="wcs" d="M488 164 L488 206"/>
+          <path id="wci" d="M512 164 L512 206"/>
+          <path id="whd" d="M500 76 L500 112"/>
+          <path id="warm" d="M500 306 L500 352"/>
+          <g id="leg">
+            <rect width="220" height="66" rx="10" fill="#F7F6F1" stroke="#B4B2A9" stroke-dasharray="5 4"/>
+            <line x1="42" y1="47" x2="178" y2="47" stroke="#534AB7" stroke-width="2"/>
+            <g fill="#FFFFFF" stroke="#7F77DD"><rect x="16" y="36" width="52" height="22" rx="5"/><rect x="84" y="36" width="52" height="22" rx="5"/><rect x="152" y="36" width="52" height="22" rx="5"/></g>
+            <g font-size="10.5" fill="#26215C" font-family="IBM Plex Mono, monospace" text-anchor="middle"><text x="42" y="51">coxa</text><text x="110" y="51">femur</text><text x="178" y="51">tibia</text></g>
+          </g>
+        </defs>
+        <g font-size="11.5" fill="#6E6C64" font-family="IBM Plex Sans, system-ui, sans-serif">
+          <line x1="660" y1="18" x2="684" y2="18" stroke="#534AB7" stroke-width="2.5"/><text x="690" y="22">servo bus</text>
+          <line x1="768" y1="18" x2="792" y2="18" stroke="#185FA5" stroke-width="2.5"/><text x="798" y="22">I²C sensors</text>
+          <line x1="884" y1="18" x2="908" y2="18" stroke="#0F6E56" stroke-width="2.5"/><text x="914" y="22">USB video</text>
+        </g>
+        <g fill="none" stroke-width="2">
+          <g stroke="#CECBF6"><use href="#wl1"/><use href="#wl2"/><use href="#wl3"/><use href="#wr1"/><use href="#wr2"/><use href="#wr3"/><use href="#wcs"/><use href="#warm"/></g>
+          <use href="#wci" stroke="#B5D0EA"/><use href="#whd" stroke="#A8D5C5"/>
+        </g>
+        <g class="flowdots">
+          <g fill="#534AB7">
+            <circle r="4"><animateMotion dur="2.6s" repeatCount="indefinite"><mpath href="#wl1"/></animateMotion></circle>
+            <circle r="4"><animateMotion dur="2.6s" begin=".9s" repeatCount="indefinite"><mpath href="#wl2"/></animateMotion></circle>
+            <circle r="4"><animateMotion dur="2.6s" begin="1.8s" repeatCount="indefinite"><mpath href="#wl3"/></animateMotion></circle>
+            <circle r="4"><animateMotion dur="2.6s" begin=".4s" repeatCount="indefinite"><mpath href="#wr1"/></animateMotion></circle>
+            <circle r="4"><animateMotion dur="2.6s" begin="1.3s" repeatCount="indefinite"><mpath href="#wr2"/></animateMotion></circle>
+            <circle r="4"><animateMotion dur="2.6s" begin="2.2s" repeatCount="indefinite"><mpath href="#wr3"/></animateMotion></circle>
+            <circle r="4"><animateMotion dur="1.3s" repeatCount="indefinite"><mpath href="#wcs"/></animateMotion></circle>
+            <circle r="4"><animateMotion dur="1.6s" begin=".5s" repeatCount="indefinite"><mpath href="#warm"/></animateMotion></circle>
+          </g>
+          <g fill="#FFFFFF" stroke="#534AB7" stroke-width="1.5">
+            <circle r="3.5"><animateMotion dur="2.6s" begin="1.3s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath href="#wl2"/></animateMotion></circle>
+            <circle r="3.5"><animateMotion dur="2.6s" begin=".2s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath href="#wr3"/></animateMotion></circle>
+          </g>
+          <circle r="4" fill="#185FA5"><animateMotion dur="1.5s" begin=".3s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath href="#wci"/></animateMotion></circle>
+          <circle r="4" fill="#0F6E56"><animateMotion dur="1.2s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath href="#whd"/></animateMotion></circle>
+        </g>
+        <g font-family="IBM Plex Sans, system-ui, sans-serif">
+          <use href="#leg" x="40" y="110"/><use href="#leg" x="40" y="220"/><use href="#leg" x="40" y="330"/>
+          <use href="#leg" x="740" y="110"/><use href="#leg" x="740" y="220"/><use href="#leg" x="740" y="330"/>
+          <g font-size="13.5" font-weight="600" fill="#2A2925">
+            <text x="56" y="134">Leg L1</text><text x="56" y="244">Leg L2</text><text x="56" y="354">Leg L3</text>
+            <text x="756" y="134">Leg R1</text><text x="756" y="244">Leg R2</text><text x="756" y="354">Leg R3</text>
+          </g>
+          <g font-size="10.5" fill="#8A887F" font-family="IBM Plex Mono, monospace" text-anchor="end">
+            <text x="250" y="134">ID 1–3</text><text x="250" y="244">ID 4–6</text><text x="250" y="354">ID 7–9</text>
+            <text x="950" y="134">ID 10–12</text><text x="950" y="244">ID 13–15</text><text x="950" y="354">ID 16–18</text>
+          </g>
+          <rect x="420" y="20" width="160" height="56" rx="10" fill="#F7F6F1" stroke="#B4B2A9" stroke-dasharray="5 4"/>
+          <text x="436" y="44" font-size="14" font-weight="600" fill="#2A2925">Head</text>
+          <text x="436" y="64" font-size="12" fill="#6E6C64">camera · pan servo</text>
+          <rect x="430" y="112" width="140" height="52" rx="10" fill="url(#gcore)" stroke="#7F77DD" stroke-width="1.5"/>
+          <text x="446" y="135" font-size="14" font-weight="600" fill="#26215C">Controller</text>
+          <text x="446" y="154" font-size="12" fill="#4A4842">your Python logic</text>
+          <rect x="380" y="206" width="240" height="100" rx="14" fill="#F7F6F1" stroke="#B4B2A9" stroke-dasharray="5 4"/>
+          <text x="396" y="232" font-size="14" font-weight="600" fill="#2A2925">Body</text>
+          <text x="396" y="252" font-size="12" fill="#6E6C64">bus hub · power · IMU</text>
+          <g font-size="10.5" font-family="IBM Plex Mono, monospace">
+            <text x="396" y="276" fill="#534AB7">bus A → left · bus B → right</text>
+            <text x="396" y="294" fill="#185FA5">IMU on I²C · battery 2S</text>
+          </g>
+          <rect x="410" y="352" width="180" height="60" rx="10" fill="#F7F6F1" stroke="#B4B2A9" stroke-dasharray="5 4"/>
+          <text x="426" y="376" font-size="14" font-weight="600" fill="#2A2925">Arm</text>
+          <text x="426" y="396" font-size="12" fill="#6E6C64">2 joints · gripper · bus C</text>
+          <text x="40" y="22" font-size="11" fill="#534AB7" font-family="IBM Plex Mono, monospace">● command  ○ feedback</text>
+        </g>
+      </svg>
+      <svg viewBox="0 0 1000 150" role="img" aria-label="Concept: Twinhaven on your computer connects over USB to an adapter that speaks the robot's servo bus and I2C; any leg can be real while the rest stays simulated; commands go out and readings come back into the run record" style="margin-top:6px">
+        <defs>
+          <path id="ad1" d="M262 86 L392 86"/>
+          <path id="ad2" d="M608 72 L738 72"/>
+          <path id="ad3" d="M608 100 L738 100"/>
+        </defs>
+        <line x1="40" y1="14" x2="960" y2="14" stroke="#E3E1D9"/>
+        <text x="40" y="40" font-size="13.5" font-weight="600" fill="#2A2925" font-family="IBM Plex Sans, system-ui, sans-serif">…and the same buses on the bench — to debug and tune real hardware</text>
+        <g fill="none" stroke-width="2"><use href="#ad1" stroke="#A8D5C5"/><use href="#ad2" stroke="#CECBF6"/><use href="#ad3" stroke="#B5D0EA"/></g>
+        <g class="flowdots">
+          <circle r="4" fill="#0F6E56"><animateMotion dur="1.6s" repeatCount="indefinite"><mpath href="#ad1"/></animateMotion></circle>
+          <circle r="3.5" fill="#FFFFFF" stroke="#0F6E56" stroke-width="1.5"><animateMotion dur="1.6s" begin=".8s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath href="#ad1"/></animateMotion></circle>
+          <circle r="4" fill="#534AB7"><animateMotion dur="1.6s" begin=".3s" repeatCount="indefinite"><mpath href="#ad2"/></animateMotion></circle>
+          <circle r="3.5" fill="#FFFFFF" stroke="#185FA5" stroke-width="1.5"><animateMotion dur="1.6s" begin=".6s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath href="#ad3"/></animateMotion></circle>
+        </g>
+        <g font-family="IBM Plex Sans, system-ui, sans-serif">
+          <rect x="40" y="56" width="222" height="60" rx="10" fill="url(#gcore)" stroke="#7F77DD" stroke-width="1.5"/>
+          <text x="56" y="80" font-size="14" font-weight="600" fill="#26215C">Twinhaven</text>
+          <text x="56" y="100" font-size="12" fill="#4A4842">the twin and your logic</text>
+          <text x="327" y="78" font-size="10.5" fill="#0F6E56" font-family="IBM Plex Mono, monospace" text-anchor="middle">USB</text>
+          <rect x="392" y="56" width="216" height="60" rx="10" fill="#F7F6F1" stroke="#B4B2A9" stroke-dasharray="5 4"/>
+          <text x="408" y="80" font-size="14" font-weight="600" fill="#2A2925">Adapter</text>
+          <text x="408" y="100" font-size="12" fill="#6E6C64">speaks servo bus · I²C</text>
+          <text x="673" y="64" font-size="10.5" fill="#534AB7" font-family="IBM Plex Mono, monospace" text-anchor="middle">commands</text>
+          <text x="673" y="118" font-size="10.5" fill="#185FA5" font-family="IBM Plex Mono, monospace" text-anchor="middle">readings</text>
+          <rect x="738" y="56" width="222" height="60" rx="10" fill="#F7F6F1" stroke="#B4B2A9" stroke-dasharray="5 4"/>
+          <text x="754" y="80" font-size="14" font-weight="600" fill="#2A2925">Real Leg R1</text>
+          <text x="754" y="100" font-size="12" fill="#6E6C64">on the bench · others simulated</text>
+          <text x="40" y="140" font-size="12" fill="#6E6C64">For bench debugging and tuning: swap one block for the real one, the same commands drive it, its readings land next to the simulated ones.</text>
+        </g>
+      </svg>
+      <p class="note" style="margin-top:8px">Today the twin already runs the legs, motors and your control code. Drawing the wiring as a schematic and simulating it is the next feature; the hardware adapter follows it on the roadmap.</p>
+    </div>
+  </div>
+</section>
+
+<section id="analysis">
+  <div class="wrap">
+    <h2>Analysis tools — exhaustive by design</h2>
+    <p class="sub">Every run is recorded. The timeline takes you to any moment in one move — scrub, loop a fragment, lay a reference run next to today's. Three kinds of instruments read the record.</p>
+<div class="card tlwide">
+      <div class="tlhead"><span class="tag now">Today</span><span class="tlmeta">run · 2 h 14 min · 3,2 M steps — gaps fold the quiet stretches, fragments name what matters</span></div>
+      <svg viewBox="0 0 1000 150" aria-hidden="true" font-family="IBM Plex Mono, monospace">
+        <defs><linearGradient id="rec" x1="0" x2="1"><stop offset="0" stop-color="#8A887F"/><stop offset="1" stop-color="#534AB7"/></linearGradient>
+        <clipPath id="tlclip"><rect x="670.6" y="0" width="103.5" height="150"/></clipPath></defs>
+        <rect x="24.0" y="18" width="101.5" height="18" rx="4" fill="rgba(206,203,246,.6)" stroke="#7F77DD"/><text x="30.0" y="31" font-size="11" fill="#2C2570">start-up</text><rect x="226.0" y="18" width="304.4" height="18" rx="4" fill="rgba(206,203,246,.6)" stroke="#7F77DD"/><text x="232.0" y="31" font-size="11" fill="#2C2570">load test</text><rect x="671.6" y="18" width="101.5" height="18" rx="4" fill="rgba(206,203,246,.6)" stroke="#534AB7" stroke-width="1.6"/><text x="677.6" y="31" font-size="11" fill="#2C2570">fault</text><rect x="793.4" y="18" width="162.3" height="18" rx="4" fill="rgba(206,203,246,.6)" stroke="#7F77DD"/><text x="799.4" y="31" font-size="11" fill="#2C2570">recovery</text>
+        <g class="loopring"><path d="M671.6 12 Q 722.3 -2 773.1 12" fill="none" stroke="#534AB7" stroke-width="1.6"/><path d="M767.1 6 L773.1 12 L765.1 13" fill="none" stroke="#534AB7" stroke-width="1.6"/></g>
+        <rect x="24.0" y="48" width="121.8" height="10" rx="3" fill="url(#rec)"/><text x="26.0" y="140" font-size="10.5" fill="#6E6C64">00:00</text><g><path d="M163.7560975609756 58 l6 -10 M171.7560975609756 58 l6 -10" stroke="#8A887F" stroke-width="2"/><path d="M173.7560975609756 58 l6 -10 M181.7560975609756 58 l6 -10" stroke="#8A887F" stroke-width="2"/><rect x="145.7560975609756" y="66" width="60" height="18" rx="9" fill="#F1EFE9" stroke="#D3D1C7"/><text x="175.7560975609756" y="79" text-anchor="middle" font-size="10.5" fill="#6E6C64">⋯ 41 min</text></g><rect x="205.8" y="48" width="365.3" height="10" rx="3" fill="url(#rec)"/><text x="207.8" y="140" font-size="10.5" fill="#6E6C64">00:47</text><g><path d="M589.0243902439024 58 l6 -10 M597.0243902439024 58 l6 -10" stroke="#8A887F" stroke-width="2"/><path d="M599.0243902439024 58 l6 -10 M607.0243902439024 58 l6 -10" stroke="#8A887F" stroke-width="2"/><rect x="571.0243902439024" y="66" width="60" height="18" rx="9" fill="#F1EFE9" stroke="#D3D1C7"/><text x="601.0243902439024" y="79" text-anchor="middle" font-size="10.5" fill="#6E6C64">⋯ 52 min</text></g><rect x="631.0" y="48" width="345.0" height="10" rx="3" fill="url(#rec)"/><text x="633.0" y="140" font-size="10.5" fill="#6E6C64">01:57</text><text x="974" y="140" font-size="10.5" fill="#6E6C64" text-anchor="end">02:14</text>
+        <line x1="24" y1="112" x2="976" y2="112" stroke="#A32D2D" stroke-dasharray="4 4" opacity=".8"/>
+        <path d="M24.0 117.4 L30.1 116.5 L36.2 114.7 L42.3 112.9 L48.4 111.8 L54.4 112.1 L60.5 113.7 L66.6 116.3 L72.7 118.8 L78.8 120.5 L84.9 120.4 L91.0 118.3 L97.1 114.3 L103.1 109.1 L109.2 103.7 L115.3 99.1 L121.4 96.1 L127.5 94.8 L133.6 95.2 L139.7 96.5 L145.8 97.8" fill="none" stroke="#185FA5" stroke-width="1.8"/><path d="M205.8 93.9 L211.8 99.0 L217.9 103.6 L224.0 106.8 L230.1 108.4 L236.2 108.4 L242.3 107.5 L248.4 106.5 L254.5 106.4 L260.5 107.7 L266.6 110.5 L272.7 114.4 L278.8 118.6 L284.9 122.0 L291.0 123.8 L297.1 123.5 L303.2 121.1 L309.2 117.2 L315.3 112.7 L321.4 108.5 L327.5 105.6 L333.6 104.2 L339.7 104.3 L345.8 105.2 L351.9 106.1 L358.0 106.0 L364.0 104.3 L370.1 101.1 L376.2 96.6 L382.3 91.8 L388.4 87.6 L394.5 85.0 L400.6 84.4 L406.7 86.0 L412.7 89.1 L418.8 92.9 L424.9 96.4 L431.0 98.9 L437.1 99.8 L443.2 99.4 L449.3 98.2 L455.4 97.2 L461.4 97.3 L467.5 99.0 L473.6 102.5 L479.7 107.3 L485.8 112.6 L491.9 117.3 L498.0 120.7 L504.1 122.0 L510.1 121.2 L516.2 118.9 L522.3 115.9 L528.4 113.1 L534.5 111.4 L540.6 111.1 L546.7 112.0 L552.8 113.6 L558.8 115.0 L564.9 115.3 L571.0 113.8" fill="none" stroke="#185FA5" stroke-width="1.8"/><path d="M631.0 94.7 L637.1 95.9 L643.1 95.7 L649.2 94.2 L655.2 92.0 L661.3 89.9 L667.3 88.9 L673.4 89.5 L679.4 92.2 L685.5 96.6 L691.5 102.0 L697.6 107.4 L703.7 111.8 L709.7 114.5 L715.8 115.4 L721.8 114.7 L727.9 113.1 L733.9 111.6 L740.0 111.0 L746.0 111.8 L752.1 113.9 L758.1 116.8 L764.2 119.7 L770.2 121.6 L776.3 121.8 L782.3 119.9 L788.4 116.2 L794.4 111.2 L800.5 105.9 L806.5 101.4 L812.6 98.4 L818.6 97.2 L824.7 97.4 L830.7 98.5 L836.8 99.6 L842.9 99.7 L848.9 98.5 L855.0 95.8 L861.0 92.2 L867.1 88.4 L873.1 85.6 L879.2 84.4 L885.2 85.3 L891.3 88.2 L897.3 92.6 L903.4 97.4 L909.4 101.7 L915.5 104.7 L921.5 106.1 L927.6 106.0 L933.6 105.1 L939.7 104.3 L945.7 104.3 L951.8 105.9 L957.8 108.9 L963.9 113.1 L969.9 117.6 L976.0 121.4" fill="none" stroke="#185FA5" stroke-width="1.8"/>
+        <line class="tlhead-line" x1="671.6" y1="10" x2="671.6" y2="126" stroke="#534AB7" stroke-width="2"/>
+      </svg>
+    </div>
+    <div class="grid">
+      <div class="card tool">
+        <span class="tag now">Today</span>
+        <svg viewBox="0 0 300 150" aria-hidden="true">
+          <line x1="20" y1="132" x2="280" y2="132" stroke="#D3D1C7" stroke-width="2"/>
+          <path d="M100.1 36.1 L102.8 37.5 L105.4 39.1 L108.0 40.7 L110.6 42.4 L113.1 44.1 L115.5 46.0 L117.8 47.9 L120.1 49.9 L122.4 51.9 L124.5 54.0 L126.6 56.1 L128.6 58.3 L130.5 60.6 L132.4 62.9 L134.1 65.3 L135.8 67.7 L137.5 70.1 L139.0 72.6 L140.4 75.1 L141.8 77.7 L143.1 80.3 L144.3 82.9 L145.4 85.5 L146.4 88.2 L147.4 90.9 L148.2 93.6 L149.0 96.3 L149.7 99.1 L150.3 101.8 L150.8 104.6 L151.2 107.3 L151.5 110.1 L151.8 112.8 L151.9 115.6 L152.0 118.3 L152.0 121.1 L151.9 123.8 L151.7 126.5 L151.5 129.2 L151.1 131.9" fill="none" stroke="#534AB7" stroke-dasharray="4 4" opacity=".55"/>
+          <g stroke-linecap="round" stroke-linejoin="round" stroke-width="7" fill="none"><path d="M62 132 L47.0 71.8 L100.1 36.1" stroke="#8a887f" opacity="0.25"/><path d="M62 132 L57.3 70.2 L117.1 47.2" stroke="#817e88" opacity="0.32"/><path d="M62 132 L67.8 70.3 L131.1 61.4" stroke="#787392" opacity="0.43"/><path d="M62 132 L78.0 72.1 L141.8 77.7" stroke="#6e699b" opacity="0.55"/><path d="M62 132 L87.9 75.7 L148.7 95.4" stroke="#655fa4" opacity="0.69"/><path d="M62 132 L97.0 80.8 L151.8 113.8" stroke="#5c54ae" opacity="0.84"/><path class="now" d="M62 132 L105.1 87.4 L151.1 131.9" stroke="#534ab7" opacity="1.00"/></g>
+          <circle cx="100.1" cy="36.1" r="2.8" fill="#534AB7" opacity="0.30"/><circle cx="117.1" cy="47.2" r="2.8" fill="#534AB7" opacity="0.42"/><circle cx="131.1" cy="61.4" r="2.8" fill="#534AB7" opacity="0.53"/><circle cx="141.8" cy="77.7" r="2.8" fill="#534AB7" opacity="0.65"/><circle cx="148.7" cy="95.4" r="2.8" fill="#534AB7" opacity="0.77"/><circle cx="151.8" cy="113.8" r="2.8" fill="#534AB7" opacity="0.88"/><circle cx="151.1" cy="131.9" r="2.8" fill="#534AB7" opacity="1.00"/>
+          <circle cx="62" cy="132" r="8" fill="#534AB7"/>
+          <g font-family="IBM Plex Mono, monospace" font-size="11" fill="#6E6C64"><text x="200" y="30">7 imprints</text><text x="200" y="46">past → now</text></g>
+        </svg>
+        <h3>Motion — stroboscopes</h3>
+        <p>Freeze poses over time into one 3D picture: the path, the swing, the moment two parts come closest. Compare the motion of two design versions side by side.</p>
+      </div>
+      <div class="card tool">
+        <span class="tag now">Today</span>
+        <svg viewBox="0 0 300 150" aria-hidden="true">
+          <rect x="16" y="20" width="268" height="92" fill="#DCE9F5" opacity=".6"/>
+          <line x1="16" y1="84" x2="284" y2="84" stroke="#A32D2D" stroke-dasharray="4 4"/>
+          <path d="M16 70 C 50 30, 80 30, 110 60 S 150 110, 170 96 S 210 40, 240 50 S 270 88, 284 92" fill="none" stroke="#185FA5" stroke-width="2.2"/>
+          <path d="M146 84 C 152 100, 164 104, 176 90 L 176 84 Z" fill="#A32D2D" opacity=".18"/>
+          <path d="M268 84 C 274 88, 280 91, 284 92 L 284 84 Z" fill="#A32D2D" opacity=".18"/>
+          <circle cx="162" cy="100" r="3.5" fill="#A32D2D"/>
+          <rect x="16" y="120" width="130" height="5" fill="#0F6E56"/><rect x="146" y="120" width="30" height="5" fill="#A32D2D"/><rect x="176" y="120" width="92" height="5" fill="#0F6E56"/><rect x="268" y="120" width="16" height="5" fill="#A32D2D"/>
+          <line class="scan" x1="120" y1="14" x2="120" y2="132" stroke="#534AB7" stroke-width="2"/>
+          <g font-family="IBM Plex Mono, monospace" font-size="11"><rect x="196" y="24" width="84" height="18" rx="4" fill="#fff" stroke="#E0B9A8"/><text x="202" y="37" fill="#A32D2D">⚠ 2 · ≥ 5,0</text><text x="170" y="114" fill="#6E6C64">min 3,7</text></g>
+        </svg>
+        <h3>Motion, measured — graphs</h3>
+        <p>Clearances, distances and angles become graphs over the whole run, with limits, a pass / fail verdict on every step, and the worst moment one click away.</p>
+      </div>
+      <div class="card tool">
+        <span class="tag soon">Roadmap</span>
+        <svg viewBox="0 0 300 150" aria-hidden="true">
+          <path d="M40 112 A 60 60 0 0 1 160 112" fill="none" stroke="#E2E0D8" stroke-width="12"/>
+          <path d="M40 112 A 60 60 0 0 1 130 61" fill="none" stroke="#0F6E56" stroke-width="12"/>
+          <path d="M130 61 A 60 60 0 0 1 160 112" fill="none" stroke="#A32D2D" stroke-width="12" opacity=".55"/>
+          <g class="needle" style="transform-origin:100px 112px"><line x1="100" y1="112" x2="100" y2="62" stroke="#2A2925" stroke-width="3" stroke-linecap="round"/></g>
+          <circle cx="100" cy="112" r="6" fill="#2A2925"/>
+          <g font-family="IBM Plex Mono, monospace" font-size="11" fill="#6E6C64"><text x="70" y="136">torque · J2</text></g>
+          <g>
+            <rect x="196" y="40" width="14" height="72" rx="3" fill="#E2E0D8"/><rect class="bar b1" x="196" y="62" width="14" height="50" rx="3" fill="#534AB7"/>
+            <rect x="220" y="40" width="14" height="72" rx="3" fill="#E2E0D8"/><rect class="bar b2" x="220" y="48" width="14" height="64" rx="3" fill="#A32D2D"/>
+            <rect x="244" y="40" width="14" height="72" rx="3" fill="#E2E0D8"/><rect class="bar b3" x="244" y="76" width="14" height="36" rx="3" fill="#534AB7"/>
+            <rect x="268" y="40" width="14" height="72" rx="3" fill="#E2E0D8"/><rect class="bar b4" x="268" y="70" width="14" height="42" rx="3" fill="#534AB7"/>
+            <line x1="190" y1="52" x2="288" y2="52" stroke="#A32D2D" stroke-dasharray="3 3"/>
+            <g font-family="IBM Plex Mono, monospace" font-size="10" fill="#6E6C64"><text x="196" y="128">J1</text><text x="220" y="128">J2</text><text x="244" y="128">J3</text><text x="268" y="128">J4</text></g>
+          </g>
+        </svg>
+        <h3>Physics — forces and torques</h3>
+        <p>Instrument stands for the whole machine: joint torques, motor currents and power, contact forces — gauges and limits that show which motor is overloaded and when, before it is ordered.</p>
+      </div>
+    </div>
   </div>
 </section>
 
