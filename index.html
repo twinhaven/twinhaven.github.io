@@ -11,11 +11,15 @@
 <meta property="og:url" content="https://twinhaven.dev/">
 <link rel="canonical" href="https://twinhaven.dev/">
 <style>
+@font-face{font-family:"IBM Plex Sans";font-weight:400;font-display:swap;src:url(fonts/ibm-plex-sans-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"IBM Plex Sans";font-weight:500;font-display:swap;src:url(fonts/ibm-plex-sans-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:"IBM Plex Sans";font-weight:600;font-display:swap;src:url(fonts/ibm-plex-sans-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:"IBM Plex Mono";font-weight:500;font-display:swap;src:url(fonts/ibm-plex-mono-latin-500-normal.woff2) format("woff2")}
 :root{
-  --bg:#f7f6f2; --surface:#ffffff; --ink:#1d1c1a; --muted:#6e6c64; --line:#e4e1d8;
-  --accent:#534ab7; --accent-ink:#ffffff; --accent-soft:#ecebf9; --ok:#2f6b4f; --warn:#a4532a;
+  --bg:#efede7; --surface:#fcfbf8; --ink:#2a2925; --muted:#6e6c64; --line:#d3d1c7;
+  --accent:#534ab7; --accent-ink:#ffffff; --accent-soft:#eeedfe; --ok:#0f6e56; --warn:#a32d2d;
   --radius:14px; --max:1080px;
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  font-family: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
 }
 @media (prefers-color-scheme: dark){
   :root{ --bg:#151517; --surface:#1e1e22; --ink:#ecebe7; --muted:#a3a19a; --line:#2e2e34;
@@ -33,7 +37,7 @@ nav a{color:var(--muted);text-decoration:none;margin-left:22px;font-size:15px}
 nav a:hover{color:var(--ink)}
 .btn{display:inline-block;background:var(--accent);color:var(--accent-ink);padding:12px 20px;border-radius:10px;text-decoration:none;font-weight:600;border:0;font-size:16px;cursor:pointer}
 .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
-.hero{padding:56px 0 40px;display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+.hero{padding:40px 0 40px;display:grid;grid-template-columns:.9fr 1.1fr;gap:36px;align-items:center}
 .eyebrow{color:var(--accent);font-weight:600;font-size:14px;letter-spacing:.06em;text-transform:uppercase}
 h1{font-size:46px;line-height:1.1;letter-spacing:-.02em;margin:10px 0 18px}
 .lead{font-size:19px;color:var(--muted);margin:0 0 26px;max-width:36em}
@@ -41,6 +45,23 @@ h1{font-size:46px;line-height:1.1;letter-spacing:-.02em;margin:10px 0 18px}
 .note{font-size:14px;color:var(--muted);margin-top:14px}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px}
 .hero-art{padding:18px}
+#hero3d{position:relative;height:500px;border-radius:var(--radius);background:radial-gradient(120% 90% at 60% 35%,#fcfbf8 0%,#efede7 70%);border:1px solid var(--line);overflow:hidden}
+#hero3d canvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab}
+#hero3d canvas:active{cursor:grabbing}
+#hero3d .fallback{position:absolute;inset:0;padding:24px;display:none}
+#hero3d.no-webgl .fallback{display:block}
+#hero3d.no-webgl .plaque,#hero3d.no-webgl .tl{display:none}
+#hero3d .plaque{position:absolute;left:0;top:0;pointer-events:none;background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--ok);border-radius:8px;padding:6px 10px;font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:12px;color:var(--muted);box-shadow:0 2px 10px rgba(42,41,37,.08);white-space:nowrap;opacity:0;transition:opacity .4s}
+#hero3d.ready .plaque{opacity:1}
+#hero3d .plaque .v{display:block;color:var(--ink);font-size:16px;font-weight:500}
+#hero3d .tl{position:absolute;left:16px;right:16px;bottom:14px;height:34px;background:rgba(252,251,248,.85);border:1px solid var(--line);border-radius:8px;backdrop-filter:blur(4px)}
+#hero3d .tl-track{position:absolute;left:12px;right:110px;top:15px;height:4px;border-radius:2px;background:#e2e0d8}
+#hero3d .tl-rec{position:absolute;left:0;top:0;bottom:0;width:100%;border-radius:2px;background:linear-gradient(90deg,#8a887f,#534ab7);opacity:.5}
+#hero3d .tl-head{position:absolute;top:-7px;width:3px;height:18px;margin-left:-1px;background:var(--ink);border-radius:2px}
+#hero3d .tl-step{position:absolute;right:12px;top:8px;font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:12px;color:var(--muted)}
+#hero3d .caption{position:absolute;left:16px;top:12px;font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+@media (max-width:860px){#hero3d{height:380px}}
+
 .hero-art svg{width:100%;height:auto;display:block}
 section{padding:56px 0;border-top:1px solid var(--line)}
 h2{font-size:32px;letter-spacing:-.015em;margin:0 0 10px}
@@ -101,8 +122,12 @@ footer a{color:var(--muted)}
       </div>
       <p class="note">Working prototype, built on MuJoCo. Public release is coming — early users shape what ships first.</p>
     </div>
-    <div class="card hero-art" aria-hidden="true">
-      <svg viewBox="0 0 420 300">
+    <div id="hero3d" role="img" aria-label="An ornithopter on a test stand: wing-beat stroboscope, wing clearance dimension with limits, and a run timeline">
+      <canvas></canvas>
+      <div class="caption">Test stand · ornithopter · wing beat</div>
+      <div class="plaque"><span>wing clearance</span><span class="v">—</span><span class="verdict">✓ in limits</span></div>
+      <div class="tl"><div class="tl-track"><div class="tl-rec"></div><div class="tl-head"></div></div><div class="tl-step">step 3000</div></div>
+      <div class="fallback"><svg viewBox="0 0 420 300">
         <defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="var(--accent)" stop-opacity=".25"/><stop offset="1" stop-color="var(--accent)" stop-opacity=".9"/></linearGradient></defs>
         <line x1="20" y1="250" x2="400" y2="250" stroke="var(--line)" stroke-width="2"/>
         <g stroke="url(#g)" stroke-width="7" stroke-linecap="round" fill="none">
@@ -123,7 +148,7 @@ footer a{color:var(--muted)}
         <rect x="20" y="268" width="380" height="14" rx="7" fill="var(--accent-soft)"/>
         <rect x="20" y="268" width="230" height="14" rx="7" fill="var(--accent)" opacity=".55"/>
         <rect x="246" y="262" width="4" height="26" rx="2" fill="var(--ink)"/>
-      </svg>
+      </svg></div>
     </div>
   </div>
 </div>
@@ -233,5 +258,6 @@ footer a{color:var(--muted)}
     © 2026 Twinhaven · <a href="privacy.html">Privacy</a> · <a href="https://github.com/twinhaven">GitHub</a>
   </footer>
 </div>
+<script type="module" src="hero.js"></script>
 </body>
 </html>
