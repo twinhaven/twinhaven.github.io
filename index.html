@@ -45,6 +45,12 @@ h1{font-size:46px;line-height:1.1;letter-spacing:-.02em;margin:10px 0 18px}
 .note{font-size:14px;color:var(--muted);margin-top:14px}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px}
 .hero-art{padding:18px}
+.scheme{padding:18px}
+.scheme svg{width:100%;height:auto;display:block}
+@media (prefers-reduced-motion: reduce){.flowdots{display:none}}
+.swipe{display:none}
+@media (max-width:860px){.scheme{overflow-x:auto}.scheme svg{min-width:760px}.swipe{display:block}}
+
 #hero3d{position:relative;height:560px;border-radius:var(--radius);background:radial-gradient(120% 90% at 60% 35%,#fcfbf8 0%,#efede7 70%);border:1px solid var(--line);overflow:hidden}
 #hero3d canvas:not(.lane){position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab}
 #hero3d canvas.lane{position:absolute;left:12px;right:12px;bottom:12px;width:calc(100% - 24px);height:126px;background:rgba(252,251,248,.92);border:1px solid var(--line);border-radius:8px;backdrop-filter:blur(4px)}
@@ -111,6 +117,7 @@ footer a{color:var(--muted)}
       Twinhaven
     </a>
     <nav>
+      <a href="#how">How it works</a>
       <a href="#what">What it does</a>
       <a href="#open">Open core</a>
       <a href="#roadmap">Roadmap</a>
@@ -127,7 +134,7 @@ footer a{color:var(--muted)}
         <a class="btn" href="#join">Join the waitlist</a>
         <a class="btn ghost" href="#join">Apply for private beta</a>
       </div>
-      <p class="note">Working prototype, built on MuJoCo. Public release is coming — early users shape what ships first.</p>
+      <p class="note">Every core idea is built and proven in working prototypes. Now we are shaping them into one coherent product — early users shape what ships first.</p>
     </div>
     <div id="hero3d" role="img" aria-label="Machines on test stands — a 6-axis arm, a SCARA and a hexapod — with stroboscope imprints, a clearance dimension with limits and a run timeline">
       <canvas></canvas>
@@ -158,6 +165,7 @@ footer a{color:var(--muted)}
         <rect x="246" y="262" width="4" height="26" rx="2" fill="var(--ink)"/>
       </svg></div>
     </div>
+      <p class="note" style="text-align:right;margin-top:8px">Concept illustration of Twinhaven measurements, stroboscope and run timeline.</p>
   </div>
 </div>
 
@@ -165,7 +173,105 @@ footer a{color:var(--muted)}
   <div class="wrap">
     <h2>Robots are designed across disconnected tools</h2>
     <p class="sub">CAD, physics, electronics, control code, training data — each hand-off is manual, so every iteration costs days. Twinhaven closes the seams. Our metric is the cost of one iteration: from “moved a motor in CAD” to “saw the new graphs” in minutes, not days.</p>
-    <div class="flow"><span>CAD assembly</span><i>→</i><span>Physics model</span><i>→</i><span>Run &amp; record</span><i>→</i><span>Measure &amp; compare</span><i>→</i><span>Decide before metal</span></div>
+
+  </div>
+</section>
+
+
+<section id="how">
+  <div class="wrap">
+    <h2>How it works</h2>
+    <p class="sub">The tools you already use stay where they are. Twinhaven connects them into one project — one digital twin of the whole machine, with every change on record.</p>
+    <div class="card scheme">
+      <svg viewBox="0 0 1000 400" role="img" aria-label="CAD, EDA and Blender feed one Twinhaven project with physics and behaviour; it produces runs and measurements, data and training, and code for real hardware; Git keeps the history of everything">
+        <defs>
+          <linearGradient id="gcore" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#EEEDFE"/><stop offset="1" stop-color="#F6F5FD"/></linearGradient>
+          <path id="pi1" d="M232 72 C 290 72, 290 150, 336 160"/>
+          <path id="pi2" d="M232 182 C 280 182, 290 182, 336 182"/>
+          <path id="pi3" d="M232 292 C 290 292, 290 214, 336 204"/>
+          <path id="po1" d="M664 160 C 710 150, 710 72, 768 72"/>
+          <path id="po2" d="M664 182 C 710 182, 720 182, 768 182"/>
+          <path id="po3" d="M664 204 C 710 214, 710 292, 768 292"/>
+        </defs>
+        <g font-size="11.5" fill="#6E6C64" font-family="IBM Plex Sans, system-ui, sans-serif"><rect x="680" y="12" width="22" height="12" rx="3" fill="#FCFBF8" stroke="#D3D1C7"/><text x="708" y="22">works today</text><rect x="800" y="12" width="22" height="12" rx="3" fill="#F7F6F1" stroke="#B4B2A9" stroke-dasharray="4 3"/><text x="828" y="22">on the roadmap</text></g>
+        <g fill="none" stroke="#CECBF6" stroke-width="2">
+          <use href="#pi1"/><use href="#pi2"/><use href="#pi3"/><use href="#po1"/><use href="#po2"/><use href="#po3"/>
+        </g>
+        <g class="flowdots" fill="#534AB7">
+          <circle r="4"><animateMotion dur="3.2s" repeatCount="indefinite"><mpath href="#pi1"/></animateMotion></circle>
+          <circle r="4"><animateMotion dur="3.2s" begin="1s" repeatCount="indefinite"><mpath href="#pi2"/></animateMotion></circle>
+          <circle r="4"><animateMotion dur="3.2s" begin="2s" repeatCount="indefinite"><mpath href="#pi3"/></animateMotion></circle>
+          <circle r="4"><animateMotion dur="3.2s" begin=".5s" repeatCount="indefinite"><mpath href="#po1"/></animateMotion></circle>
+          <circle r="4"><animateMotion dur="3.2s" begin="1.5s" repeatCount="indefinite"><mpath href="#po2"/></animateMotion></circle>
+          <circle r="4"><animateMotion dur="3.2s" begin="2.5s" repeatCount="indefinite"><mpath href="#po3"/></animateMotion></circle>
+        </g>
+        <g font-family="IBM Plex Sans, system-ui, sans-serif">
+          <g>
+            <rect x="40" y="40" width="192" height="64" rx="10" fill="#FCFBF8" stroke="#D3D1C7"/>
+            <text x="56" y="66" font-size="15" font-weight="600" fill="#2A2925">CAD</text>
+            <text x="56" y="88" font-size="12.5" fill="#6E6C64">geometry, joints, parts</text>
+            <rect x="40" y="150" width="192" height="64" rx="10" fill="#F7F6F1" stroke="#B4B2A9" stroke-dasharray="5 4"/>
+            <text x="56" y="176" font-size="15" font-weight="600" fill="#2A2925">EDA</text>
+            <text x="56" y="198" font-size="12.5" fill="#6E6C64">motors, drivers, wiring</text>
+            <rect x="40" y="260" width="192" height="64" rx="10" fill="#F7F6F1" stroke="#B4B2A9" stroke-dasharray="5 4"/>
+            <text x="56" y="286" font-size="15" font-weight="600" fill="#2A2925">Blender</text>
+            <text x="56" y="308" font-size="12.5" fill="#6E6C64">looks, lights, cameras</text>
+          </g>
+          <g>
+            <rect x="336" y="40" width="328" height="284" rx="16" fill="url(#gcore)" stroke="#7F77DD" stroke-width="1.5"/>
+            <text x="360" y="72" font-size="17" font-weight="600" fill="#26215C">Twinhaven project</text>
+            <text x="360" y="94" font-size="12.5" fill="#4A4842">one digital twin of the whole machine</text>
+            <rect x="360" y="114" width="280" height="44" rx="9" fill="#FFFFFF" stroke="#CECBF6"/>
+            <text x="376" y="141" font-size="13.5" fill="#2A2925"><tspan font-weight="600">Physics</tspan> · contacts, motors, sensors</text>
+            <rect x="360" y="168" width="280" height="44" rx="9" fill="#FFFFFF" stroke="#CECBF6"/>
+            <text x="376" y="195" font-size="13.5" fill="#2A2925"><tspan font-weight="600">Behaviour</tspan> · control code in Python</text>
+            <rect x="360" y="222" width="280" height="44" rx="9" fill="#FFFFFF" stroke="#CECBF6"/>
+            <text x="376" y="249" font-size="13.5" fill="#2A2925"><tspan font-weight="600">Run record</tspan> · every step, replayable</text>
+            <text x="360" y="304" font-size="11" fill="#534AB7" font-family="IBM Plex Mono, monospace">runs on your machine · scales to the cloud</text>
+          </g>
+          <g>
+            <rect x="768" y="40" width="192" height="64" rx="10" fill="#FCFBF8" stroke="#D3D1C7"/>
+            <text x="784" y="66" font-size="15" font-weight="600" fill="#2A2925">Measure &amp; decide</text>
+            <text x="784" y="88" font-size="12.5" fill="#0F6E56">✓ limits, verdicts, graphs</text>
+            <rect x="768" y="150" width="192" height="64" rx="10" fill="#F7F6F1" stroke="#B4B2A9" stroke-dasharray="5 4"/>
+            <text x="784" y="176" font-size="15" font-weight="600" fill="#2A2925">Data &amp; training</text>
+            <text x="784" y="198" font-size="12.5" fill="#6E6C64">labelled datasets, AI</text>
+            <rect x="768" y="260" width="192" height="64" rx="10" fill="#F7F6F1" stroke="#B4B2A9" stroke-dasharray="5 4"/>
+            <text x="784" y="286" font-size="15" font-weight="600" fill="#2A2925">Real hardware</text>
+            <text x="784" y="308" font-size="12.5" fill="#6E6C64">same logic on the controller</text>
+          </g>
+          <text x="222" y="166" font-size="10.5" fill="#8A887F" font-family="IBM Plex Mono, monospace" text-anchor="end">roadmap</text><text x="222" y="276" font-size="10.5" fill="#8A887F" font-family="IBM Plex Mono, monospace" text-anchor="end">roadmap</text><text x="950" y="166" font-size="10.5" fill="#8A887F" font-family="IBM Plex Mono, monospace" text-anchor="end">roadmap</text><text x="950" y="276" font-size="10.5" fill="#8A887F" font-family="IBM Plex Mono, monospace" text-anchor="end">roadmap</text>
+          <g>
+            <line x1="40" y1="366" x2="960" y2="366" stroke="#B4B2A9" stroke-width="2"/>
+            <g fill="#534AB7">
+              <circle cx="120" cy="366" r="5"/><circle cx="260" cy="366" r="5"/><circle cx="400" cy="366" r="5"/>
+              <circle cx="540" cy="366" r="5"/><circle cx="680" cy="366" r="5"/><circle cx="820" cy="366" r="5"/>
+            </g>
+            <circle class="flowdots" cx="900" cy="366" r="7" fill="none" stroke="#534AB7" stroke-width="2"><animate attributeName="r" values="5;9;5" dur="2s" repeatCount="indefinite"/></circle>
+            <text x="40" y="350" font-size="12.5" fill="#4A4842"><tspan font-weight="600">Git</tspan> · the full history of the whole machine — design, code and runs</text>
+          </g>
+        </g>
+      </svg>
+    </div>
+    <p class="note swipe">Swipe the scheme sideways →</p>
+  </div>
+</section>
+
+<section id="pieces">
+  <div class="wrap">
+    <h2>Why each piece is there</h2>
+    <p class="sub">A robot is mechanics, electronics, code and data at once. Each piece below answers a question that is expensive to answer with metal.</p>
+    <div class="grid">
+      <div class="card"><h3>CAD — the shape of the truth</h3><p>Your assembly stays the single source of geometry. Parts become bodies with real masses; change a part in CAD and the twin follows — no remodelling by hand.</p></div>
+      <div class="card"><h3>Physics — answers, not animation</h3><p>Built on MuJoCo, the physics engine trusted in robotics research. Contacts, motor torque and friction are computed, so a joint overload shows up before you order the motor.</p></div>
+      <div class="card"><span class="tag soon">Roadmap</span><h3>EDA — mechanism meets circuit</h3><p>A motor is a mechanical part and an electrical load at the same time. Linking the schematic to the mechanism checks drivers, currents and power before the board is made.</p></div>
+      <div class="card"><span class="tag soon">Roadmap</span><h3>Blender — for complex sensors</h3><p>Cameras, lidars and thermal sensors need light, materials and weather, not just geometry. Blender renders what the robot's sensors would actually see — including fog and glare.</p></div>
+      <div class="card"><h3>Behaviour — the same logic as on the robot</h3><p>Control code is plain Python behind the schematic. It drives the twin today, so you debug logic without risking hardware; carrying the same logic to the real controller is on the roadmap.</p></div>
+      <div class="card"><h3>Git — a time machine for the whole design</h3><p>Git is the version system every software team relies on. Twinhaven brings it to the entire machine: every design change and every run is kept, any result from months ago can be replayed, and a team works in parallel without overwriting each other.</p></div>
+      <div class="card"><span class="tag soon">Roadmap</span><h3>Data &amp; AI — not a weekend job</h3><p>Teaching a robot to see or walk takes thousands of simulated runs with varied light, weather and loads, and labels for every frame. That is real infrastructure — compute farms and pipelines — which Twinhaven runs in the cloud so you don't have to build it.</p></div>
+      <div class="card"><h3>Measurements — a verdict, not a guess</h3><p>Set a clearance or an angle with limits and every step of a run gets pass or fail, with the worst moment one click away. Engineering decisions get a number behind them.</p></div>
+      <div class="card"><h3>Local and cloud — your data, your choice</h3><p>Design and debugging run on your machine, so your CAD model does not have to leave it. Heavy work — mass simulation, data generation, training — scales out to the cloud when you need it.</p></div>
+    </div>
   </div>
 </section>
 
