@@ -130,6 +130,7 @@ footer a{color:var(--muted)}
   nav{display:none}
 }
 </style>
+<script type="application/ld+json">[{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "Twinhaven", "url": "https://twinhaven.dev/", "applicationCategory": "DesignApplication", "operatingSystem": "Windows 10, Windows 11", "softwareRequirements": "SolidWorks 2022 (private beta)", "description": "Twinhaven turns a SolidWorks assembly into a MuJoCo physics model you can run, record, measure and compare: run timeline, clearance and angle measurements with limits and a pass / fail verdict, stroboscope of poses, comparison against a reference run kept in git. Wiring and electronics, team collaboration, other CAD systems and cloud features are on the roadmap, not in the product yet.", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD", "description": "Free during the private beta; paid plans later."}}, {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What works in Twinhaven today?", "acceptedAnswer": {"@type": "Answer", "text": "Import of a SolidWorks assembly into a MuJoCo physics model, a recorded run timeline you can scrub, clearance and angle measurements with limits and a pass / fail verdict on every step, a stroboscope of poses, and comparison against a reference run kept in git."}}, {"@type": "Question", "name": "What is not in the product yet?", "acceptedAnswer": {"@type": "Answer", "text": "Wiring and electronics, team collaboration, CAD systems other than SolidWorks, photoreal rendering, dataset generation, training and cloud features. They are on the roadmap, in that order of priority, without dates."}}, {"@type": "Question", "name": "What do I need for the private beta?", "acceptedAnswer": {"@type": "Answer", "text": "Windows 10 or 11 (64-bit) and SolidWorks 2022. The beta is free."}}]}]</script>
 </head>
 <body>
 <div class="wrap">
@@ -475,6 +476,7 @@ footer a{color:var(--muted)}
       <div class="card"><span class="tag now">Today</span><h3>Compare against a reference</h3><p>Keep a run in git as a reference and lay today's run next to it — what changed after your design edit is visible at a glance.</p></div>
       <div class="card"><span class="tag now">Today</span><h3>Your data stays yours</h3><p>The project lives in your own git repository, the output is open MJCF. Your CAD model does not have to leave your machine.</p></div>
     </div>
+    <p class="note" style="margin-top:14px"><b>Not in the product yet:</b> wiring and electronics, team collaboration, CAD systems other than SolidWorks, rendering, datasets, training and cloud features — they are on the roadmap below.</p>
   </div>
 </section>
 
@@ -531,7 +533,7 @@ footer a{color:var(--muted)}
 <section id="join">
   <div class="wrap">
     <h2>Join the waitlist</h2>
-    <p class="sub">We will email you once — when Twinhaven is ready to try. SolidWorks users can apply for the private beta.</p>
+    <p class="sub">We will email you once — when Twinhaven is ready to try. SolidWorks users can apply for the private beta — Windows 10/11 and SolidWorks 2022, free during the beta.</p>
     <form class="card" action="https://formspree.io/f/mwllrqyz" method="POST">
       <input type="hidden" name="_subject" value="Twinhaven waitlist">
       <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
@@ -547,6 +549,10 @@ footer a{color:var(--muted)}
       <div><label for="cad">Main CAD</label>
         <select id="cad" name="cad">
           <option>SolidWorks</option><option>Autodesk Inventor</option><option>Fusion</option><option>Onshape</option><option>Other / none</option>
+        </select></div>
+      <div><label for="swver">SolidWorks version (if you use it)</label>
+        <select id="swver" name="solidworks_version">
+          <option>—</option><option>2025</option><option>2024</option><option>2023</option><option>2022</option><option>2021 or older</option>
         </select></div>
       <label class="check"><input type="checkbox" name="beta" value="yes"><span>I'd like to join the private beta</span></label>
       <label class="check"><input type="checkbox" name="consent" value="yes" required><span>I agree to the <a href="privacy.html">privacy notice</a>. One launch email, no spam, unsubscribe anytime.</span></label>
