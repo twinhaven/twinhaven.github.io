@@ -273,7 +273,7 @@ show(MACHINES[start] ? start : 'arm');
 // ---------- run timeline (mini lane in the style of the product timeline) ----------
 const L = { bg: '#fcfbf8', grid: '#e2e0d8', text: '#6e6c64', ink: '#2a2925', graph: '#185FA5', fill: 'rgba(220,233,245,.75)',
   limit: '#A32D2D', ok: '#0F6E56', strob: '#2f7d6b', accent: '#534AB7', head: '#534AB7' };
-function fmtNum(v) { return (v >= 100 ? v.toFixed(0) : v.toFixed(1)).replace('.', ','); }
+function fmtNum(v) { return (v >= 100 ? v.toFixed(0) : v.toFixed(1)); }
 function drawLane(p) {
   const dpr = Math.min(devicePixelRatio, 2), W = lane.clientWidth, H = lane.clientHeight;
   if (lane.width !== Math.round(W * dpr) || lane.height !== Math.round(H * dpr)) { lane.width = Math.round(W * dpr); lane.height = Math.round(H * dpr); }
@@ -336,7 +336,7 @@ function drawLane(p) {
   // ruler
   const ry = H - 9;
   g.fillStyle = L.text;
-  for (let s = 0; s <= DURATION + 1e-6; s += 1) { const x = X(s / DURATION); g.fillText(s === 0 ? '0' : s.toFixed(1).replace('.', ',') + ' s', x + 3, ry); }
+  for (let s = 0; s <= DURATION + 1e-6; s += 1) { const x = X(s / DURATION); g.fillText(s === 0 ? '0' : s.toFixed(1) + ' s', x + 3, ry); }
 
   // playhead + value chip + time chip
   const hx = Math.round(X(p)) + 0.5, v = cur.series[Math.round(p * SAMPLES)];
@@ -345,7 +345,7 @@ function drawLane(p) {
   const vy0 = Y(v) < gy0 + 22 ? Y(v) + 6 : Y(v) - 8;
   g.fillStyle = '#fff'; g.strokeStyle = ok ? '#BFE3D6' : '#E0B9A8'; roundRect(g, hx + 4, vy0, vw, 15, 3); g.fill(); g.stroke();
   g.fillStyle = ok ? L.ok : L.limit; g.fillText(vt, hx + 9, vy0 + 7.5);
-  const tt = `${(p * DURATION).toFixed(1).replace('.', ',')} s · step ${Math.round(p * STEPS)}`;
+  const tt = `${(p * DURATION).toFixed(1)} s · step ${Math.round(p * STEPS)}`;
   const tw = g.measureText(tt).width + 12, tx = Math.min(Math.max(hx - tw / 2, 2), W - tw - 2);
   g.fillStyle = '#fff'; g.strokeStyle = L.head; roundRect(g, tx, H - 17, tw, 15, 3); g.fill(); g.stroke();
   g.fillStyle = L.ink; g.fillText(tt, tx + 6, H - 9.5);
@@ -374,7 +374,7 @@ function frame() {
   const px = Math.min(Math.max(x + 16, 8), host.clientWidth - 170);
   const laneTop = host.clientHeight - 12 - lane.clientHeight - 8;
   plaque.style.transform = `translate(${Math.round(px)}px, ${Math.round(Math.min(Math.max(y - 30, 44), laneTop - 66))}px)`;
-  plaque.querySelector('.v').textContent = (mm >= 100 ? mm.toFixed(0) : mm.toFixed(1)).replace('.', ',') + ' mm';
+  plaque.querySelector('.v').textContent = (mm >= 100 ? mm.toFixed(0) : mm.toFixed(1)) + ' mm';
   const verdict = plaque.querySelector('.verdict');
   verdict.textContent = okNow ? '✓ in limits' : '⚠ below limit';
   verdict.style.color = col; plaque.style.borderLeftColor = col;
